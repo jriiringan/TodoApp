@@ -21,9 +21,9 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View>Init Application</View>
+      <View><Text>Init Application</Text></View>
     </SafeAreaView>
   );
 };
