@@ -3,6 +3,15 @@
 <img src="https://github.com/jriiringan/TodoApp/blob/master/img1.jpg" width="400" height="800">
 <img src="https://github.com/jriiringan/TodoApp/blob/master/img2.jpg" width="400" height="800">
 </p>
+##### About The Project #####
+The application should include the ff:
+
+1. Capable of search using type
+2. List of Artwork
+3. List of Bookmarks
+4. Displaying bookmark flag
+5. Term / search keyboard after an item is bookmarked
+
 
 ##### Build instructions #####
 1. Open the ```TodoApp``` directory
