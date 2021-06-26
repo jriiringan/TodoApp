@@ -12,14 +12,22 @@ import {
 import store from './src/redux/store';
 import { Provider, useSelector } from 'react-redux';
 import { AppNavigator } from './src/routes/router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {  ThemeProvider } from 'react-native-elements';
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <AppNavigator/>
-    </SafeAreaView>
+      <SafeAreaProvider>
+        <ThemeProvider> 
+          <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+            <AppNavigator/>
+        </SafeAreaView>
+        </ThemeProvider>
+      </SafeAreaProvider>
+      
     </Provider>
 
   );

@@ -5,7 +5,7 @@ import {  SEARCH_ENTITY } from './actions';
 const initialState = {
     items: [],
     history: [],
-    search: 'qwrqw'
+    search: ''
 };
 
 const listing = (state = initialState, action) => {
