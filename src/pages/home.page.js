@@ -19,6 +19,7 @@ import NoResult from '../components/NoResult';
 import { fetchGet } from '../network/service';
 import {ArtItem} from '../components/ArtItem';
 import { searchEntity } from '../redux/handler';
+import { cleanCollection } from '../helper/utils';
 
 export default function HomePage(props){
     const route = useRoute();
@@ -36,8 +37,8 @@ export default function HomePage(props){
         let result = await fetchGet({
             term: encodeURI(searchText)
         });
-        dispatch(searchEntity(result.results));
-        console.log(listing.items[0]);
+        let cleanResult = await cleanCollection(result.results, 'collectionId');
+        dispatch(searchEntity(cleanResult));
     }
 
     const onNavDetails = () => {
@@ -48,7 +49,13 @@ export default function HomePage(props){
     };
 
     const renderItem = ({ item }) => (
-        <ArtItem artistName={item.artistName}/>
+        <ArtItem 
+        artistName={item.artistName} 
+        artworkUrl={item.artworkUrl100}
+        collectionName={item.collectionName}
+        collectionPrice={item.collectionPrice}
+        releaseDate={item.releaseDate}
+        shortDescription={item.shortDescription || ''} />
       );
 
     return (
@@ -66,10 +73,13 @@ export default function HomePage(props){
                 <Block xsSize="1/1" lgSize="3/4" xlSize="3/4">
                     {/* <NoResult/> */}
                     <FlatList
+                        numColumns={1}  
+                        initialNumToRender={50}
                         style={selfStyle.listContainer}
+                        contentContainerStyle={selfStyle.listContentContainer}
                         data={listing.items}
                         renderItem={renderItem}
-                        keyExtractor={item => item?.trackId}
+                        keyExtractor={item => item?.collectionId}
                     />            
                 </Block>
             </Section>
@@ -83,6 +93,9 @@ export default function HomePage(props){
         fontFamily: 'Lato'
      },
      listContainer:{
+         width: '100%'
+     },
+     listContentContainer: {
          width: '100%'
      }
  });

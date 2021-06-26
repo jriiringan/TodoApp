@@ -6,24 +6,29 @@ import {
 } from 'react-native';
 // import { Card, Button, Icon } from 'react-native-elements';
 
-import { Text, ListItem, Avatar } from 'react-native-elements';
+import { Text, ListItem, Image, Avatar } from 'react-native-elements';
 
 export const ArtItem = ({
-  artistName, collectionPrice,trackPrice, artworkUrl100
+  artistName, collectionName, collectionPrice, releaseDate, trackPrice, artworkUrl, shortDescription
 }) =>{
   return (
       <React.Fragment>
-      <ListItem bottomDivider>
-        <Avatar source={{uri: artworkUrl100}} />
-          <ListItem.Title>{artistName}</ListItem.Title>
-          <ListItem.Subtitle>{trackPrice}</ListItem.Subtitle>
-          <ListItem.Subtitle>{collectionPrice}</ListItem.Subtitle>
-        </ListItem>
+     <ListItem bottomDivider >
+      <Avatar title={collectionName} source={{ uri: artworkUrl }}/>
+      <ListItem.Content>
+        <ListItem.Title>{collectionName}</ListItem.Title>
+        <ListItem.Subtitle>{artistName}</ListItem.Subtitle>
+        {shortDescription != '' && <ListItem.Subtitle>{shortDescription}</ListItem.Subtitle>}
+      </ListItem.Content>
+      <ListItem.Chevron />
+    </ListItem>
       </React.Fragment>
   );
 };
 
 const selfStyle = StyleSheet.create({
-  
+  container: {
+
+  }
 });
 
