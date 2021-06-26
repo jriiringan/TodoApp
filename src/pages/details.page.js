@@ -10,13 +10,13 @@ import {
 
 import { useSelector } from 'react-redux';
 
-export default function BookmarkPage(){
+export default function DetailsPage(){
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     
     <View style={{ flex: 1 }}>
-        <Text>Bookmark Page</Text>
+        <Text>Details Page</Text>
     </View>
   );
 };
