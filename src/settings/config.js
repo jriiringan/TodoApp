@@ -1,28 +1,28 @@
 const BASEURL = 'https://itunes.apple.com/search?';
 const ENTITIES = [
     {
-        name: 'movie',
+        name: 'Movie',
         key: 'movie',
         mediaType: ['movieArtist', 'movie']
     },{
-        name: 'music',
+        name: 'Music',
         key: 'music',
         mediaType: ['musicArtist', 'musicTrack', 'album', 'musicVideo', 'mix', 'song']
     },
  {
-        name: 'podcast',
+        name: 'Podcast',
         key: 'podcast'
     },
 {
-        name: 'musicVideo',
+        name: 'Music Video',
         key: 'musicVideo'
     },
  {
-        name: 'audioBook',
+        name: 'Audio Book',
         key: 'audioBook'
     },
  {
-        name: 'shortFilm',
+        name: 'Short Film',
         key: 'shortFilm'
     },
 {

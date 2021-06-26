@@ -60,6 +60,7 @@ export default function DetailsPage(props){
             showLongDescription={true}
             searchBy={item.searchby}
             hideChevron={true}
+            currency={item.currency}
             shortDescription={item.shortDescription || ''} />
             <Button  title={`${buttonTitle || 'add'} to Bookmark`}
             type="outline" onPress={onPressAddToBookmark} titleStyle={selfStyle.button}></Button>

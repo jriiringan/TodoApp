@@ -30,8 +30,8 @@ export const SimpleItem = ({
       <ListItem bottomDivider onPress={()=> {onPressItem()}} >
         <Avatar title={collectionName} source={{ uri: artworkUrl }}/>
         <ListItem.Content>
-          <ListItem.Title>{collectionName}</ListItem.Title>
-          <ListItem.Subtitle>{artistName}</ListItem.Subtitle>
+          {collectionName && <ListItem.Title>{collectionName}</ListItem.Title>}
+          {artistName && <ListItem.Subtitle>{artistName}</ListItem.Subtitle>}
           {collectionPrice && <ListItem.Subtitle>Collection Price:{collectionPrice || 'N/A'} {currency}</ListItem.Subtitle>}
           {trackPrice && <ListItem.Subtitle>Track Price:{trackPrice || 'N/A'} {currency}</ListItem.Subtitle>}
           {shortDescription !== '' && !showLongDescription && <ListItem.Subtitle>{shortDescription}</ListItem.Subtitle>}

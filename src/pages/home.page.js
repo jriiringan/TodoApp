@@ -11,7 +11,7 @@ FlatList
 import {useRoute} from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SearchBar, Text, Badge, ListItem } from 'react-native-elements';
+import { SearchBar, Text, Badge, ListItem, LinearProgress } from 'react-native-elements';
 import { Grid, Section, Block } from 'react-native-responsive-layout';
 
 import NoResult from '../components/NoResult'; 
@@ -41,11 +41,17 @@ export default function HomePage(props){
     const [selectedFilter, setFilter] = useState('');
     const [noResultFound, setNoResult] = useState(false);
 
+    // TEMPORARY LOADER
+    // USE A COMPONENT ACCESIBLE TO PREVENT DUPLICATE AND LOCAL STATES
+    const [isLoading, setIsLoading] = useState(false);
+
     const onSearchText = (value) => {
         setSearchText(value);
     } 
 
+    // SUBMIT SEARCH METHOD
     const onSubmitSearch = async () => {
+        setIsLoading(value => true);
         setNoResult(value => false);
         let params = {
             term: encodeURI(searchText),
@@ -62,7 +68,7 @@ export default function HomePage(props){
             setNoResult(value => true);
         }
         let cleanResult = await cleanCollection(result.results, 'collectionId');
-        
+        setIsLoading(value => false);
         // ADD FLAG FOR BOOKMARKED
         if(cleanResult.length > 0){
             cleanResult.map((item,j) => {
@@ -109,6 +115,7 @@ export default function HomePage(props){
         longDescription={item.longDescription}
         isBookmarked={checkBookmark(item)}
         showLongDescription={false}
+        currency={item.currency}
         onPress={()=> onNavDetails(item)}
         shortDescription={item.shortDescription || ''} />
     );
@@ -127,6 +134,7 @@ export default function HomePage(props){
                 value={searchText}
                 inputStyle={selfStyle.search}
             />
+            {isLoading && <LinearProgress color="primary" />}
             <View style={selfStyle.badgeContainer}>
             <ListItem.Accordion
                 style={{width: '100%'}}
@@ -191,7 +199,7 @@ export default function HomePage(props){
      badgeStyle: {
         alignItems: 'center',
         height: 30,
-        paddingRight: 6,
+        paddingHorizontal: 6,
         marginTop: 6,
         marginBottom: 6
      },

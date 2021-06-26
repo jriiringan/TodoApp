@@ -50,6 +50,7 @@ export default function BookmarkPage(props){
         releaseDate={item.releaseDate}
         longDescription={item.longDescription}
         isBookmarked={true}
+        currency={item.currency}
         showLongDescription={false}
         onPress={()=> onNavDetails(item)}
         shortDescription={item.shortDescription || ''} />

@@ -8,3 +8,6 @@
 
 ##### Android specific build instructions #####
 1. Run your application through the Simulator or on a real device.
+
+##### Important Note #####
+This application is tested only on Android device due to the machine used
