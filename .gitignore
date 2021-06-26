@@ -20,7 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-
+img1.jpg
+img2.jpg
 # Android/IntelliJ
 #
 build/
