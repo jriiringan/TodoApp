@@ -1,6 +1,6 @@
 ### TodoApp React Native Application###
-![](https://github.com/jriiringan/TodoApp/blob/master/img1.jpg | width=100)
-![](https://github.com/jriiringan/TodoApp/blob/master/img2.jpg | width=100)
+![img|320x271](https://github.com/jriiringan/TodoApp/blob/master/img1.jpg)
+![img|320x271](https://github.com/jriiringan/TodoApp/blob/master/img2.jpg)
 
 ##### Build instructions #####
 1. Open the ```TodoApp``` directory
