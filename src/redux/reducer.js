@@ -1,12 +1,11 @@
 
 import { combineReducers } from 'redux';
-import {  SEARCH_ENTITY, ADD_BOOKMARK } from './actions';
+import {  SEARCH_ENTITY, ADD_BOOKMARK, REMOVE_BOOKMARK } from './actions';
 
 const initialState = {
     items: [],
     history: [],
-    bookmarks: [],
-    search: ''
+    bookmarks: []
 };
 
 const listing = (state = initialState, action) => {
@@ -14,13 +13,20 @@ const listing = (state = initialState, action) => {
         case SEARCH_ENTITY:
             return { 
                 ...state, 
-                items: [...state.items, ...action.item]
+                items: action.item
             };
         case ADD_BOOKMARK:
-                return { 
-                    ...state, 
-                    items: [...state.bookmarks, ...action.item]
-                };
+            return { 
+                ...state, 
+                bookmarks: [...state.bookmarks, action.item]
+            };
+        case REMOVE_BOOKMARK:
+        return { 
+            ...state, 
+            bookmarks: [
+                ...state.bookmarks.slice(0,action.item), 
+                ...state.bookmarks.slice(action.item + 1)]
+        };
         default:
             return state;
     }

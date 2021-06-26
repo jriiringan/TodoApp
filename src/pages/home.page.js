@@ -23,6 +23,15 @@ import { FONTSIZE } from '../styles/size';
 
 import {ENTITIES} from '../settings/config';
 
+const BadgeItem = ({item, onAddFilter, k, selectedFilter}) => {
+    return (<Badge
+        badgeStyle={selfStyle.badgeStyle}
+        textStyle={selfStyle.badgeText}
+    status={selectedFilter == item.key ? 'success': 'primary' } value={item.name} key={item.key} onPress={ () =>{onAddFilter(item.key)}} />);
+}
+
+const FilterItem = React.memo(BadgeItem);
+
 export default function HomePage(props){
     const route = useRoute();
     const dispatch = useDispatch();
@@ -46,21 +55,49 @@ export default function HomePage(props){
             params.entity = selectedFilter;
             if(selectedFilter == 'all') params.entity = '';
         }
+
         let result = await fetchGet(params);
 
         if(result.resultCount < 1){
             setNoResult(value => true);
         }
         let cleanResult = await cleanCollection(result.results, 'collectionId');
-        dispatch(searchEntity(result.results));
+        
+        // ADD FLAG FOR BOOKMARKED
+        if(cleanResult.length > 0){
+            cleanResult.map((item,j) => {
+                cleanResult[j]['bookmark'] = false;
+                listing.bookmarks?.filter((book, k) => {
+                    if(`${book.collectionId}${book.trackId}` == `${item.collectionId}${item.trackId}`){
+                        cleanResult[j]['bookmark'] = true;
+                        return;
+                    }
+                });
+            });
+        }
+        dispatch(searchEntity(cleanResult));
     }
 
-    const onNavDetails = () => {
+    const onNavDetails = (item) => {
+        // ADD SEARCHBY KEY
+        item.searchby = searchText || '';
+
         // TO PREVENT MULTIPLE NAV
         if(route.name !== 'Details'){
-            props.navigation.navigate('Details');
+            props.navigation.navigate('Details', {item: item});
         }
     };
+
+    const checkBookmark = (item) => {
+        let isBookmarked = false;
+        listing.bookmarks?.filter((book, k) => {
+            if(`${book.collectionId}${book.trackId}` == `${item.collectionId}${item.trackId}`){
+                isBookmarked = true;
+                return;
+            }
+        });
+        return isBookmarked;
+    }
 
     const renderItem = ({ item }) => (
         <ArtItem 
@@ -69,7 +106,10 @@ export default function HomePage(props){
         collectionName={item.collectionName}
         collectionPrice={item.collectionPrice}
         releaseDate={item.releaseDate}
-        isBookmarked={true}
+        longDescription={item.longDescription}
+        isBookmarked={checkBookmark(item)}
+        showLongDescription={false}
+        onPress={()=> onNavDetails(item)}
         shortDescription={item.shortDescription || ''} />
     );
 
@@ -103,12 +143,13 @@ export default function HomePage(props){
                     setExpanded(!expanded);
                 }}
                 >
-                    <View style={selfStyle.filterContent}>
-                        {ENTITIES.map((item,k) => <Badge
-                        badgeStyle={selfStyle.badgeStyle}
-                        textStyle={selfStyle.badgeText}
-                        status={selectedFilter == item.key ? 'success': 'primary' } value={item.name}key={k} onPress={ () =>{onAddFilter(item.key)}} />)}
-                    </View>
+                <View style={selfStyle.filterContent}>
+                    {ENTITIES.map((item,k) => <FilterItem 
+                    selectedFilter={selectedFilter} 
+                    item={item} 
+                    k={k} 
+                    onAddFilter={onAddFilter} />)}
+                </View>
                     
             </ListItem.Accordion>
              
@@ -124,7 +165,7 @@ export default function HomePage(props){
                         contentContainerStyle={selfStyle.listContentContainer}
                         data={listing.items}
                         renderItem={renderItem}
-                        keyExtractor={item => item?.collectionId}
+                        keyExtractor={item => `${item?.collectionId}${item?.trackId || ''}${item?.collectionArtistId || ''}`}
                     />            
                 </Block>
             </Section>
