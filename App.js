@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import store from './src/redux/store';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import { AppNavigator } from './src/routes/router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {  ThemeProvider } from 'react-native-elements';
